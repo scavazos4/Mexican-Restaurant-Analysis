@@ -1,7 +1,7 @@
 // Creating map object
 var myMap = L.map("map", {
-    center: [40.7, -73.95],
-    zoom: 11
+    center: [39.50, -98.35],
+    zoom: 5
   });
   
   // Adding tile layer to the map
@@ -21,40 +21,40 @@ var myMap = L.map("map", {
   var get = "?get=";
   var variables = "NAME,POP";
   var total = "&HISP=0";
-  var nonHispanic = "&HISP=1"
-  var hispanic = "&HISP=2"
+  var nonHispanic = "&HISP=1";
+  var hispanic = "&HISP=2";
   var state = "&for=state:*";
   var county = "&for=county:*";
   var key = "&key=" + APICensus;
   
   // Assemble API query URL
-  var url = baseURL + year + datasetName + get + variables + total + state + county + key;
+  var url = baseURL + year + datasetName + get + variables + total + county + key;
   console.log(url);
   // Grab the data with d3
   d3.json(url, function(response) {
     console.log(response);
   })
-    // Create a new marker cluster group
-//     var markers = L.markerClusterGroup();
+  //   // Create a new marker cluster group
+  //   var markers = L.markerClusterGroup();
   
-//     // Loop through data
-//     for (var i = 0; i < response.length; i++) {
+  //   // Loop through data
+  //   for (var i = 0; i < response.length; i++) {
   
-//       // Set the data location property to a variable
-//       var location = response[i].location;
+  //     // Set the data location property to a variable
+  //     var location = response[i].NAME;
   
-//       // Check for location property
-//       if (location) {
+  //     // Check for location property
+  //     if (location) {
   
-//         // Add a new marker to the cluster group and bind a pop-up
-//         markers.addLayer(L.marker([location.coordinates[1], location.coordinates[0]])
-//           .bindPopup(response[i].descriptor));
-//       }
+  //       // Add a new marker to the cluster group and bind a pop-up
+  //       markers.addLayer(L.marker([location.coordinates[1], location.coordinates[0]])
+  //         .bindPopup(response[i].descriptor));
+  //     }
   
-//     }
+  //   }
   
-//     // Add our marker cluster layer to the map
-//     myMap.addLayer(markers);
+  //   // Add our marker cluster layer to the map
+  //   myMap.addLayer(markers);
   
-//   });
+  // });
   
