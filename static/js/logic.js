@@ -30,10 +30,17 @@ var myMap = L.map("map", {
   // Assemble API query URL
   var url = baseURL + year + datasetName + get + variables + total + county + key;
   console.log(url);
+
   // Grab the data with d3
   d3.json(url, function(response) {
     console.log(response);
+    
   })
+
+
+
+
+  
   //   // Create a new marker cluster group
   //   var markers = L.markerClusterGroup();
   
