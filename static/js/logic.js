@@ -3,6 +3,7 @@ var myMap = L.map("map", {
     center: [39.50, -98.35],
     zoom: 5
   });
+
   
   // Adding tile layer to the map
   L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
@@ -14,54 +15,49 @@ var myMap = L.map("map", {
     accessToken: APILeaflet,
   }).addTo(myMap);
   
-  // Store API query variables
-  var baseURL = "https://api.census.gov/data";
-  var year = "/2019";
-  var datasetName = "/pep/charagegroups";
-  var get = "?get=";
-  var variables = "NAME,POP";
-  var total = "&HISP=0";
-  var nonHispanic = "&HISP=1";
-  var hispanic = "&HISP=2";
-  var state = "&for=state:*";
-  var county = "&for=county:*";
-  var key = "&key=" + APICensus;
   
-  // Assemble API query URL
-  var url = baseURL + year + datasetName + get + variables + total + county + key;
-  console.log(url);
+//   L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+//     id: 'mapbox/light-v9',
+//     attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+//     tileSize: 512,
+//     zoomOffset: -1
+// }).addTo(myMap);
 
-  // Grab the data with d3
-  d3.json(url, function(response) {
-    console.log(response);
-    
-  })
+L.geoJson(statesData).addTo(myMap);
 
 
+function getColor(d) {
+  return d > 0.50  ? '#800026' :
+         d > 0.45  ? '#BD0026' :
+         d > 0.40  ? '#E31A1C' :
+         d > 0.35  ? '#FC4E2A' :
+         d > 0.30  ? '#FD8D3C' :
+         d > 0.25  ? '#FEB24C' :
+         d > 0.20  ? '#FED976' :
+                   '#FFEDA0';
+}
+
+d3.csv("/data/hispanicData.csv")
+  .row(function style(data) {
+    return {
+      Percent_Hispanic: data.Percent_Hispanic
+  };
+})
+.get(function(data) {
+  console.log(data);
+});
 
 
-  
-  //   // Create a new marker cluster group
-  //   var markers = L.markerClusterGroup();
-  
-  //   // Loop through data
-  //   for (var i = 0; i < response.length; i++) {
-  
-  //     // Set the data location property to a variable
-  //     var location = response[i].NAME;
-  
-  //     // Check for location property
-  //     if (location) {
-  
-  //       // Add a new marker to the cluster group and bind a pop-up
-  //       markers.addLayer(L.marker([location.coordinates[1], location.coordinates[0]])
-  //         .bindPopup(response[i].descriptor));
-  //     }
-  
-  //   }
-  
-  //   // Add our marker cluster layer to the map
-  //   myMap.addLayer(markers);
-  
-  // });
-  
+function style(d) {
+  return {
+      fillColor: getColor(d.Percent_Hispanic),
+      weight: 2,
+      opacity: 1,
+      color: 'white',
+      dashArray: '3',
+      fillOpacity: 0.7
+  };
+}
+
+L.geoJson(statesData, {style: style}).addTo(myMap);
+
