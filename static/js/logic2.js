@@ -11,7 +11,7 @@ var myMap = L.map("map", {
     tileSize: 512,
     maxZoom: 18,
     zoomOffset: -1,
-    id: "mapbox/streets-v11",
+    id: "mapbox/light-v9",
     accessToken: APILeaflet,
   }).addTo(myMap);
   
@@ -32,21 +32,21 @@ var geojson;
 
 // --------------------start of hispanic----------------------------------------------//
 function getColor(d) {
-  return d > 0.40  ? '#7f0000' :
-         d > 0.35  ? '#b30000' :
-         d > 0.30  ? '#d7301f' :
-         d > 0.25  ? '#ef6548' :
-         d > 0.20  ? '#fc8d59' :
-         d > 0.15  ? '#fdbb84' :
-         d > 0.10  ? '#fdd49e' :
-         d > 0.05  ? '#fee8c8' :
-                     '#fff7ec';
+  return d > 44  ? '#67000d' :
+         d > 42  ? '#a50f15' :
+         d > 40  ? '#cb181d' :
+         d > 38  ? '#ef3b2c' :
+         d > 36  ? '#fb6a4a' :
+         d > 34  ? '#fc9272' :
+         d > 32  ? '#fcbba1' :
+         d > 30  ? '#fee0d2' :
+                   '#fff5f0';
 }
 
 
 function style(feature) {
   return {
-      fillColor: getColor(feature.properties.hisp),
+      fillColor: getColor(feature.properties.medianAge),
       weight: 2,
       opacity: 1,
       color: 'white',
@@ -106,8 +106,8 @@ info.onAdd = function (map) {
 
 // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
-    this._div.innerHTML = '<h4>Hispanic Population Percentage</h4>' +  (props ?
-        '<b>' + props.name + '</b><br />' + (parseFloat(props.hisp * 100).toFixed(2)) +"%" 
+    this._div.innerHTML = '<h4>Median Age</h4>' +  (props ?
+        '<b>' + props.name + '</b><br />' + props.medianAge
         : 'Hover over a state');
 };
 
@@ -119,24 +119,17 @@ var legend = L.control({position: 'bottomright'});
 legend.onAdd = function (map) {
 
     var div = L.DomUtil.create('div', 'info legend'),
-        grades = [0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.35, 0.40],
+        grades = [30, 32, 34, 36, 38, 40, 42, 44],
         labels = [];
 
     // loop through our density intervals and generate a label with a colored square for each interval
     for (var i = 0; i < grades.length; i++) {
         div.innerHTML +=
             '<i style="background:' + getColor(grades[i]) + '"></i> ' +
-            grades[i]*100 + "%" + (grades[i + 1] ? '&ndash;' + grades[i + 1]*100 + "%" + '<br>' : '+');
+            grades[i]  + (grades[i + 1] ? '&ndash;' + grades[i + 1]  + '<br>' : '+');
     }
 
     return div;
 };
 
 legend.addTo(myMap);
-// --------------------end of hispanic----------------------------------------------//
-
-// --------------------start of median age----------------------------------------------//
-
-
-
-
