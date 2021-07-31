@@ -143,7 +143,7 @@ legend.addTo(myMap);
 //-----------------creating layers--------------///
 
 var overlayMaps = {
-    restaurants: restaurants
+    Restaurants: restaurants
 };
 
 
