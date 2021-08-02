@@ -114,8 +114,8 @@ info.onAdd = function (map) {
 
 // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
-    this._div.innerHTML = '<h4>Hispanic Population Percentage and Restaurant Rating</h4>' +  (props ?
-        '<b>' + props.name + '</b><br />' + (parseFloat(props.hisp * 100).toFixed(2)) +"%"  +
+    this._div.innerHTML = (props ? '<h2>' + props.name + '</h2>' +  
+        '<b>Percent Hispanic</b><br />' + (parseFloat(props.hisp * 100).toFixed(2)) +"%"  +
         '<br /><br />' + "<b>Yelp Rating</b> <br />" + props.rating
         : 'Hover over a state');
 };
