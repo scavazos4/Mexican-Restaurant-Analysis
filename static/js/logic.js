@@ -24,6 +24,14 @@ var myMap = L.map("map", {
 // }).addTo(myMap);
 
 
+d3.csv("data/restaurantsDF.csv", function(restaurants) {
+
+  for (var i = 0; i< restaurants.length; i++) {
+  L.marker([restaurants[i].latitudeRest, restaurants[i].longitudeRest],
+      {title: "restaurants[i].nameRest" }).addTo(myMap);
+  }
+  
+});
 
 
 L.geoJson(statesData).addTo(myMap);
@@ -106,8 +114,9 @@ info.onAdd = function (map) {
 
 // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
-    this._div.innerHTML = '<h4>Hispanic Population Percentage</h4>' +  (props ?
-        '<b>' + props.name + '</b><br />' + (parseFloat(props.hisp * 100).toFixed(2)) +"%" 
+    this._div.innerHTML = '<h4>Hispanic Population Percentage and Restaurant Rating</h4>' +  (props ?
+        '<b>' + props.name + '</b><br />' + (parseFloat(props.hisp * 100).toFixed(2)) +"%"  +
+        '<br /><br />' + "<b>Yelp Rating</b> <br />" + props.rating
         : 'Hover over a state');
 };
 
@@ -135,7 +144,7 @@ legend.onAdd = function (map) {
 legend.addTo(myMap);
 // --------------------end of hispanic----------------------------------------------//
 
-// --------------------start of median age----------------------------------------------//
+
 
 
 
