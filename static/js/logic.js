@@ -134,7 +134,7 @@ legend.onAdd = function (map) {
     // loop through our density intervals and generate a label with a colored square for each interval
     for (var i = 0; i < grades.length; i++) {
         div.innerHTML +=
-            '<i style="background:'  + getColor(grades[i]) + '"></i> ' + + '% Hispanic'
+            '<i style="background:'  + getColor(grades[i]) + '"></i> ' + '% Hispanic'
             grades[i]*100 + "%" + (grades[i + 1] ? '&ndash;' + grades[i + 1]*100 + "%" + '<br>' : '+');
     }
 
